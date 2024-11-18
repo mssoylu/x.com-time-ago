@@ -1,29 +1,32 @@
 // ==UserScript==
-// @name         Double Click Link Opener for Long Text
+// @name         Double Click URL Opener
 // @namespace    http://tampermonkey.net/
-// @version      0.2
-// @description  Open a new tab with a custom URL based on double-clicked text, if it's longer than 16 characters
-// @author       You
+// @version      1.0
+// @description  Open a custom URL based on selected text longer than 16 characters on double-click
+// @author       Mehmet
+// @match        *://*/*
 // @grant        none
 // ==/UserScript==
 
 (function () {
     'use strict';
 
-    // Çift tıklama olayını dinle
+    // Event listener for double-click
     document.addEventListener('dblclick', function (event) {
-        // Seçili metni al
+        // Get the selected text
         const selectedText = window.getSelection().toString().trim();
 
-        // Eğer metin 16 karakterden uzunsa işleme devam et
+        // Validate the selected text
         if (selectedText.length > 16) {
             console.log(`Selected text: ${selectedText}`);
 
-            // URL oluştur
+            // Build the URL
             const url = `https://jup.ag/swap/USDC-${encodeURIComponent(selectedText)}`;
 
-            // Yeni sekmede URL'yi aç
+            // Open the URL in a new tab
             window.open(url, '_blank');
+        } else {
+            console.log("Selected text is too short or invalid.");
         }
     });
 })();
